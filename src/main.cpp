@@ -2,14 +2,15 @@
 
 int main(int argc, char* argv[]) {
     Window main_window;
+    EventHandler event_handler;
+    Input input;
     main_window.init();
     bool done = false;
     while (!done) {
-        SDL_Event event;
-        while (SDL_PollEvent(&event)) {
-            if (event.type == SDL_EVENT_QUIT) {
-                done = true;
-            }
+        event_handler.window_event();
+        if (event_handler.is_quit_flag_set()){
+            done = true;
+            break;
         }
     }
     main_window.shutdown();

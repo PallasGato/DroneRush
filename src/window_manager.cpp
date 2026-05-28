@@ -6,10 +6,10 @@ bool Window::init(){
         return 1;
     }
     window = SDL_CreateWindow(
-        "An SDL3 window",                  // window title
-        WINDOW_W,                               // width, in pixels
-        WINDOW_H,                               // height, in pixels
-        0                  // flags - see below
+        "Drone Rush!",
+        WINDOW_W,
+        WINDOW_H,
+        0
     );
     if (window == nullptr) {
         SDL_LogError(SDL_LOG_CATEGORY_ERROR, "Could not create window: %s\n", SDL_GetError());
