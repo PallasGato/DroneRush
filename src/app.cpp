@@ -8,6 +8,9 @@ void App::run(){
     while (!quit) {
         frame_timer.start_frame();
         event_handler.window_event();
+        if (event_handler.is_button_pressed(SDL_BUTTON_RIGHT)){
+            SDL_Log("LMB pressed");
+        }
         process_event_flags();
         render();
         frame_timer.end_frame();
