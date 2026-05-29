@@ -5,7 +5,6 @@
 class EventHandler{
 private:
     int scancodes;
-    SDL_Event event;
     bool quit_flag = false;
 public:
     void window_event();

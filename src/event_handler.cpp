@@ -1,6 +1,7 @@
 #include "event_handler.h"
 
 void EventHandler::window_event(){
+    SDL_Event event;
     SDL_PollEvent(&event);
     switch (event.type)
     {
