@@ -10,6 +10,8 @@ private:
     static constexpr int WINDOW_H = 768;
 public:
     bool init();
+    bool NewFunction(bool &retFlag);
     void shutdown();
     SDL_Window* get_window() const;
+    SDL_Renderer* get_renderer() const;
 };

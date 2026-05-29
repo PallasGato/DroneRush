@@ -6,13 +6,17 @@
 
 class App{
 private: 
-    Window main_window;
+    Window window;
     EventHandler event_handler;
     Input input;
     FrameTimer frame_timer;
-    bool done = false;
+    bool quit = false;
+
+    void process_event_flags();
+
 public:
     bool init();
     void run();
+    void render();
     void shutdown();
 };

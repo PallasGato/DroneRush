@@ -1,7 +1,7 @@
 #include "frame_timer.h"
 
 void FrameTimer::start_frame(){
-    uint64_t frame_start = SDL_GetTicks();
+    frame_start = SDL_GetTicks();
 }
 
 void FrameTimer::end_frame(){
