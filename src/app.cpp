@@ -8,15 +8,8 @@ void App::run(){
     while (!quit) {
         frame_timer.start_frame();
         event_handler.window_event();
-        if (event_handler.is_button_just_pressed(LEFT_MOUSE_BUTTON)){
-            SDL_Log("LMB pressed");
-        }
-        if (event_handler.is_button_just_released(MIDDLE_MOUSE_BUTTON)){
-            SDL_Log("MMB pressed");
-        }
-        if (event_handler.is_button_just_released(RIGHT_MOUSE_BUTTON)){
-            SDL_Log("RMB pressed");
-        }
+        if (event_handler.is_key_just_released(SDL_SCANCODE_A))
+            SDL_Log("A pressed!");
         process_event_flags();
         render();
         frame_timer.end_frame();

@@ -1,6 +1,7 @@
 #pragma once 
 
 #include <SDL3/SDL.h>
+#include <array>
 
 using MouseButtonMask = uint8_t;
 
@@ -10,16 +11,31 @@ using MouseButtonMask = uint8_t;
 
 class EventHandler{
 private:
-    int scancodes;
     bool quit_flag = false;
     float mouse_x, mouse_y;
-    MouseButtonMask mouse_state_mask = 0, mouse_down_mask, mouse_up_mask;
+    //Mouse state masks
+    MouseButtonMask mouse_state_mask = 0;
+    MouseButtonMask mouse_down_mask = 0;
+    MouseButtonMask mouse_up_mask = 0;
+    //Mouse handlers
     void mouse_button_down_handler(const SDL_Event& event);
     void mouse_button_up_handler(const SDL_Event& event);
+
+    //keyboard keys state
+    std::array<bool, SDL_SCANCODE_COUNT> current_keys{};
+    std::array<bool, SDL_SCANCODE_COUNT> previous_keys{};
+    //Keyboard handlers
+    void key_down_handler(const SDL_Event& event);
+    void key_up_handler(const SDL_Event& event);
 public:
     void window_event();
     bool is_quit_flag_set();
-    bool is_button_pressed(MouseButtonMask mous_state_flag);
-    bool is_button_just_pressed(MouseButtonMask mous_state_flag);
-    bool is_button_just_released(MouseButtonMask mous_state_flag);
+    //Mouse methods
+    bool is_button_pressed(MouseButtonMask mouse_flag);
+    bool is_button_just_pressed(MouseButtonMask mouse_flag);
+    bool is_button_just_released(MouseButtonMask mouse_flag);
+    //Keyboard methods
+    bool is_key_pressed(SDL_Scancode key);
+    bool is_key_just_pressed(SDL_Scancode key);
+    bool is_key_just_released(SDL_Scancode key);
 };
