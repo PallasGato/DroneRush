@@ -6,7 +6,7 @@
 class App{
 private: 
     Window window;
-    EventHandler event_handler;
+    InputHandler input_handler;
     FrameTimer frame_timer;
     bool quit = false;
 
