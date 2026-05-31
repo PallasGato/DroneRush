@@ -1,4 +1,4 @@
-#include "event_handler.h"
+#include "input_handler.h"
 
 void InputHandler::input_event(){
     SDL_Event event;
