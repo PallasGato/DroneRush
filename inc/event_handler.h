@@ -23,7 +23,8 @@ private:
 
     //keyboard keys state
     std::array<bool, SDL_SCANCODE_COUNT> current_keys{};
-    std::array<bool, SDL_SCANCODE_COUNT> previous_keys{};
+    std::array<bool, SDL_SCANCODE_COUNT> currently_pressed{};
+    std::array<bool, SDL_SCANCODE_COUNT> currently_released{};
     //Keyboard handlers
     void key_down_handler(const SDL_Event& event);
     void key_up_handler(const SDL_Event& event);

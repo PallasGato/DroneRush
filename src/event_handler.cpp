@@ -4,7 +4,8 @@ void EventHandler::window_event(){
     SDL_Event event;
     mouse_down_mask = 0;
     mouse_up_mask = 0;
-    previous_keys = current_keys;
+    currently_pressed = {};
+    currently_released = {};
     while (SDL_PollEvent(&event)){
         switch (event.type)
         {
@@ -60,22 +61,24 @@ bool EventHandler::is_button_just_released(MouseButtonMask mouse_flag){
 
 //Key handlers
 void EventHandler::key_down_handler(const SDL_Event& event){
+    currently_pressed[event.key.scancode] = !event.key.repeat;
     current_keys[event.key.scancode] = true;
 }
 
 void EventHandler::key_up_handler(const SDL_Event& event){
     current_keys[event.key.scancode] = false;
+    currently_released[event.key.scancode] = true;
 }
 
 //Keyboard states methods
 bool EventHandler::is_key_pressed(SDL_Scancode key){
-     return current_keys[key];
+    return current_keys[key];
 }
 
 bool EventHandler::is_key_just_pressed(SDL_Scancode key){
-    return current_keys[key] && !previous_keys[key];
+    return currently_pressed[key];
 }
 
 bool EventHandler::is_key_just_released(SDL_Scancode key){
-    return !current_keys[key] && previous_keys[key];
+    return currently_released[key];
 }

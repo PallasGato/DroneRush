@@ -7,5 +7,5 @@ public:
     void end_frame();
 private:
     uint64_t frame_start;
-    static constexpr uint64_t FRAME_TIME = 16;
+    static constexpr uint64_t FRAME_TIME = 100;
 };

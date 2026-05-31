@@ -5,11 +5,15 @@ bool App::init(){
 }
 
 void App::run(){
+    int frame = 0;
     while (!quit) {
         frame_timer.start_frame();
         event_handler.window_event();
-        if (event_handler.is_key_just_released(SDL_SCANCODE_A))
-            SDL_Log("A pressed!");
+        SDL_Log("Frame %d", frame);
+        if (event_handler.is_key_just_pressed(SDL_SCANCODE_A))
+            SDL_Log("A released!");
+        if (event_handler.is_button_just_released(LEFT_MOUSE_BUTTON))
+            SDL_Log("LMB pressed!");
         process_event_flags();
         render();
         frame_timer.end_frame();
