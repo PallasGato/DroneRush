@@ -1,15 +1,24 @@
 #include "app.h"
 
 bool App::init(){
-    return window.init();
+    if (!window.init()){
+        renderer = window.get_renderer();
+        return 0;
+    }
+    return 1;
 }
 
 void App::run(){
+    // Add the game scene to the scene manager
+    auto game_scene = std::make_unique<GameScene>();
+    scene_manager.add_scene(std::move(game_scene));
+    // Main loop
     while (!quit) {
         frame_timer.start_frame();
         input_handler.input_event();
         process_event_flags();
-        render();
+        scene_manager.scene_update(input_handler);
+        scene_manager.render_scene(*renderer);
         frame_timer.end_frame();
     }
 }
@@ -24,17 +33,4 @@ void App::process_event_flags(){
     }
 }
 
-void App::render(){
-    SDL_Renderer* renderer_p = window.get_renderer();
-    SDL_SetRenderDrawColor(renderer_p, 255, 255, 255, 255);
-    SDL_RenderClear(renderer_p);
-    SDL_FRect rectangle{
-        100.f,
-        100.f,
-        50.f,
-        50.f
-    };
-    SDL_SetRenderDrawColor(renderer_p, 255, 0, 0, 255);
-    SDL_RenderFillRect(renderer_p, &rectangle);
-    SDL_RenderPresent(renderer_p);
-}
+App::~App() = default;

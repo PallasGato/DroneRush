@@ -6,8 +6,8 @@ class Window{
 private:
     SDL_Window* window = nullptr;
     SDL_Renderer* renderer = nullptr;
-    static constexpr int WINDOW_W = 1024;
-    static constexpr int WINDOW_H = 768;
+    static constexpr int WINDOW_W = 1920;
+    static constexpr int WINDOW_H = 1080;
 public:
     bool init();
     bool NewFunction(bool &retFlag);
