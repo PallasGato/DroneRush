@@ -13,7 +13,7 @@ public:
         visible = true;
         position = {0, 0};
     }
-    virtual void draw(SDL_Renderer& renderer, Vector2DF view_position) = 0;
+    virtual void draw(SDL_Renderer& renderer, const Vector2DF& view_position) = 0;
     void change_visibility(bool visibility);
     
 };

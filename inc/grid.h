@@ -2,7 +2,6 @@
 
 #include <SDL3/SDL.h>
 #include <vector>
-#include <algorithm>
 #include "game_object.h"
 #include "cell.h"
 #include "geometry.h"
@@ -22,5 +21,5 @@ public:
     Grid();
     virtual ~Grid() = default;
 
-    void draw(SDL_Renderer& renderer, Vector2DF view_position);
+    void draw(SDL_Renderer& renderer, const Vector2DF& view_position);
 };

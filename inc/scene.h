@@ -18,7 +18,8 @@ public:
 
     void add_game_object(std::unique_ptr<GameObject> game_object);
     void add_view_position(Vector2DF position_change);
-    
+    void render(SDL_Renderer& renderer);
     virtual void update(InputHandler& input_handler) = 0;
-    virtual void render(SDL_Renderer& renderer);
 };
+  
+    
