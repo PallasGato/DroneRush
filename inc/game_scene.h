@@ -5,6 +5,7 @@
 
 class GameScene: public Scene{
 private:
+    
 public:
     GameScene();
     void update(InputHandler& input_handler);

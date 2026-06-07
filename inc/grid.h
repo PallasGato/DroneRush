@@ -2,8 +2,10 @@
 
 #include <SDL3/SDL.h>
 #include <vector>
+#include <algorithm>
 #include "game_object.h"
 #include "cell.h"
+#include "geometry.h"
 
 class Grid : public GameObject{
 private:
@@ -20,5 +22,5 @@ public:
     Grid();
     virtual ~Grid() = default;
 
-    void draw(SDL_Renderer& renderer);
+    void draw(SDL_Renderer& renderer, Vector2DF view_position);
 };

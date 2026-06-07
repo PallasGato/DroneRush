@@ -10,7 +10,7 @@ Camera::Camera(){
     y = 0;
 }
 
-Camera::move(float x_pos, float y_pos){
+void Camera::move(float x_pos, float y_pos){
     x += x_pos;
     y += y_pos;
 }

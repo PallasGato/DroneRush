@@ -12,6 +12,7 @@ Grid::Grid(uint16_t grid_width, uint16_t grid_height, float grid_step){
 
 
 Grid::Grid(){
+    position = {0, 0};
     width = 0;
     height = 0;
     grid_distance = 0;
@@ -34,7 +35,12 @@ void Grid::set_point_array(){
 
 
 // Draws the grid on the screen using SDL_RenderPoints. The grid points are rendered in green color.
-void Grid::draw(SDL_Renderer& renderer){
+void Grid::draw(SDL_Renderer& renderer, Vector2DF view_position){
+    std::vector<SDL_FPoint> transformed_points = grid_point_array;
+    for (auto& point : transformed_points) {
+        point.x += view_position.x;
+        point.y += view_position.y;
+    }
     SDL_SetRenderDrawColor(&renderer, 0, 255, 0, SDL_ALPHA_OPAQUE);
-    SDL_RenderPoints(&renderer, grid_point_array.data(), grid_point_array.size());
+    SDL_RenderPoints(&renderer, transformed_points.data(), transformed_points.size());
 }

@@ -13,6 +13,8 @@ void SceneManager::scene_update(InputHandler& input_handler){
 }
 
 void SceneManager::render_scene(SDL_Renderer& renderer){
+    SDL_SetRenderDrawColor(&renderer, 0, 0, 0, SDL_ALPHA_OPAQUE);
+    SDL_RenderClear(&renderer);
     active_scene->render(renderer);
     SDL_RenderPresent(&renderer);
 }
