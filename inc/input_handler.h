@@ -2,6 +2,7 @@
 
 #include <SDL3/SDL.h>
 #include <array>
+#include "geometry.h"
 
 using MouseButtonMask = uint8_t;
 
@@ -9,15 +10,6 @@ using MouseButtonMask = uint8_t;
 #define MIDDLE_MOUSE_BUTTON 2
 #define RIGHT_MOUSE_BUTTON 4
 
-struct MOUSE_ABSOLUTE_POSITION{
-    float x;
-    float y;
-};
-
-struct MOUSE_RELATIVE_POSITION{
-    float rel_x;
-    float rel_y;
-};
 
 class InputHandler{
 private:
@@ -49,8 +41,8 @@ public:
     bool is_button_pressed(MouseButtonMask mouse_flag);
     bool is_button_just_pressed(MouseButtonMask mouse_flag);
     bool is_button_just_released(MouseButtonMask mouse_flag);
-    MOUSE_ABSOLUTE_POSITION get_absolute_position();
-    MOUSE_RELATIVE_POSITION get_relative_position();
+    Vector2DF get_absolute_position();
+    Vector2DF get_relative_position();
     void get_absolute_position(float& absolute_x, float& absolute_y);
     void get_relative_position(float& relative_x, float& relative_y);
     //Keyboard methods

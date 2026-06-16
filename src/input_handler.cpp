@@ -72,12 +72,12 @@ void InputHandler::mouse_motion_handler(const SDL_Event& event){
     rel_y += event.motion.yrel;
 }
 
-MOUSE_ABSOLUTE_POSITION InputHandler::get_absolute_position(){
-    return MOUSE_ABSOLUTE_POSITION{x, y};
+Vector2DF InputHandler::get_absolute_position(){
+    return Vector2DF{x, y};
 }
 
-MOUSE_RELATIVE_POSITION InputHandler::get_relative_position(){
-    return MOUSE_RELATIVE_POSITION{rel_x, rel_y};
+Vector2DF InputHandler::get_relative_position(){
+    return Vector2DF{rel_x, rel_y};
 }
 
 void InputHandler::get_absolute_position(float& absolute_x, float& absolute_y){

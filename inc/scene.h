@@ -11,7 +11,7 @@
 class Scene{
 private:
     std::list<std::unique_ptr<GameObject>> game_objects = {};
-    Vector2DF view_position = {0, 0};
+    Vector2DF view_position;
 public:
     Scene();
     virtual ~Scene() = default;
@@ -20,6 +20,8 @@ public:
     void add_view_position(Vector2DF position_change);
     void render(SDL_Renderer& renderer);
     virtual void update(InputHandler& input_handler) = 0;
+
+    Vector2DF get_view_position();
 };
   
     

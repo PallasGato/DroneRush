@@ -7,7 +7,8 @@ Grid::Grid(uint16_t grid_width, uint16_t grid_height, float grid_step){
     height = grid_height;
     grid_distance = grid_step;
     visible = true;
-    set_point_array();
+    cells.resize(height, std::vector<Cell>(width));
+    set_point_arrays();
 }
 
 
@@ -21,7 +22,7 @@ Grid::Grid(){
 // Array of points for grid.
 // Made for rendering debug points.
 // Later coordinates will be used to place game objects on the grid.
-void Grid::set_point_array(){
+void Grid::set_point_arrays(){
     float y = 0;
     for (int row = 0; row < height; row++){
         float x = 0;
@@ -33,6 +34,16 @@ void Grid::set_point_array(){
     }
 }
 
+
+Cell Grid::snap_to_grid(const Vector2DF& position){
+    int col = static_cast<int>(position.x / grid_distance);
+    int row = static_cast<int>(position.y / grid_distance);
+    if (col >= 0 && col < width && row >= 0 && row < height){
+        return cells[row][col];
+    }
+    // Return an empty cell if the position is out of bounds
+    return Cell();
+}
 
 // Draws the grid on the screen using SDL_RenderPoints. The grid points are rendered in green color.
 void Grid::draw(SDL_Renderer& renderer, const Vector2DF& view_position){

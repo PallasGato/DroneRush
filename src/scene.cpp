@@ -14,6 +14,10 @@ void Scene::add_view_position(Vector2DF position_change){
     view_position += position_change;
 }
 
+Vector2DF Scene::get_view_position(){
+    return view_position;
+}
+
 Scene::Scene(){ 
-    return;
+    view_position = {0, 0};
 }

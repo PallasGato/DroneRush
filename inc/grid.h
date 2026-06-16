@@ -15,11 +15,12 @@ private:
     std::vector<std::vector<Cell>> cells = {};
     std::vector<SDL_FPoint> grid_point_array = {};
 
-    void set_point_array();
+    void set_point_arrays();
 public:
     Grid(uint16_t grid_width, uint16_t grid_height, float grid_step);
     Grid();
     virtual ~Grid() = default;
 
+    Cell snap_to_grid(const Vector2DF& position);
     void draw(SDL_Renderer& renderer, const Vector2DF& view_position);
 };
