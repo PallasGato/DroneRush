@@ -1,8 +1,9 @@
 #include "game_scene.h"
 
-GameScene::GameScene(){
-    auto grid = std::make_unique<Grid>(256, 256, 32);
-    add_game_object(std::move(grid));
+GameScene::GameScene(){ 
+    auto grid_object = std::make_unique<Grid>(256, 256, 32);
+    grid = grid_object.get();
+    add_game_object(std::move(grid_object));
 }
 
 void GameScene::update(InputHandler& input_handler){
@@ -20,6 +21,10 @@ void GameScene::update(InputHandler& input_handler){
     }
     Vector2DF mouse_position = input_handler.get_absolute_position();
     Vector2DF mouse_to_world_position = screen_to_world(mouse_position, get_view_position());
+    on_hover_cell = grid->snap_to_grid(mouse_to_world_position);
+    int row = 0, col = 0;
+    on_hover_cell.get_coordinates(row, col);
+    SDL_Log("Row:%d\tCol:%d", row, col);
     return;
 }
 

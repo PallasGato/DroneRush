@@ -28,6 +28,7 @@ void Grid::set_point_arrays(){
         float x = 0;
         for (int col = 0; col < width; col++){
             grid_point_array.push_back(SDL_FPoint{x, y});
+            cells[row][col] = Cell(row, col);
             x += grid_distance;
         }
         y += grid_distance;
@@ -35,20 +36,20 @@ void Grid::set_point_arrays(){
 }
 
 
-Cell Grid::snap_to_grid(const Vector2DF& position){
+Cell& Grid::snap_to_grid(const Vector2DF& position){
     int col = static_cast<int>(position.x / grid_distance);
     int row = static_cast<int>(position.y / grid_distance);
     if (col >= 0 && col < width && row >= 0 && row < height){
         return cells[row][col];
     }
-    // Return an empty cell if the position is out of bounds
-    return Cell();
+    // If the position is out of bounds, return a default cell with invalid coordinates.
+    return invalid_cell; 
 }
 
 // Draws the grid on the screen using SDL_RenderPoints. The grid points are rendered in green color.
 void Grid::draw(SDL_Renderer& renderer, const Vector2DF& view_position){
     std::vector<SDL_FPoint> transformed_points = grid_point_array;
     world_to_screen(transformed_points, view_position);
-    SDL_SetRenderDrawColor(&renderer, 0, 255, 0, SDL_ALPHA_OPAQUE);
+    SDL_SetRenderDrawColor(&renderer, 255, 0, 255, SDL_ALPHA_OPAQUE);
     SDL_RenderPoints(&renderer, transformed_points.data(), transformed_points.size());
 }

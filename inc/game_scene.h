@@ -7,7 +7,8 @@
 
 class GameScene: public Scene{
 private:
-    
+    Grid* grid = nullptr;
+    Cell on_hover_cell = Cell(-1, -1);
 public:
     GameScene();
     void update(InputHandler& input_handler);
