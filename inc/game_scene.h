@@ -4,6 +4,8 @@
 #include "scene.h"
 #include "geometry.h"
 #include "input_handler.h"
+#include "game_object.h"
+#include "grid.h"
 
 class GameScene: public Scene{
 private:

@@ -7,24 +7,31 @@ GameScene::GameScene(){
 }
 
 void GameScene::update(InputHandler& input_handler){
+    //Changing camera position with WASD keys
     if (input_handler.is_key_pressed(SDL_SCANCODE_W)){
-        add_view_position({0, -10});
+        get_camera().move(0, -10);
     }
     if (input_handler.is_key_pressed(SDL_SCANCODE_S)){
-        add_view_position({0, 10});
+        get_camera().move(0, 10);
     }
     if (input_handler.is_key_pressed(SDL_SCANCODE_A)){
-        add_view_position({-10, 0});
+        get_camera().move(-10, 0);
     }
     if (input_handler.is_key_pressed(SDL_SCANCODE_D)){
-        add_view_position({10, 0});
+        get_camera().move(10, 0);
     }
+
+    //Getting mouse position and converting it to world coordinates
     Vector2DF mouse_position = input_handler.get_absolute_position();
-    Vector2DF mouse_to_world_position = screen_to_world(mouse_position, get_view_position());
+    Vector2DF mouse_to_world_position = get_camera().point_to_world(mouse_position);
+
+    //Getting cell according to mouse position and logging it
+    int row, col;
     on_hover_cell = grid->snap_to_grid(mouse_to_world_position);
-    int row = 0, col = 0;
     on_hover_cell.get_coordinates(row, col);
     SDL_Log("Row:%d\tCol:%d", row, col);
+
+    //Returning from the function (seems obvious to comment)
     return;
 }
 
