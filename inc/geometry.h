@@ -11,10 +11,11 @@ struct  Vector2DF{
         this->y += other.y;
         return *this;
     }
-    Vector2DF& operator+(const Vector2DF& other){
-        this->x += other.x;
-        this->y += other.y;
-        return *this;
+    Vector2DF operator+(const Vector2DF& other) const{
+        return {x + other.x, y + other.y};
+    }
+    bool operator==(const Vector2DF& other) const{
+        return (x == other.x && y == other.y);
     }
 };
 
