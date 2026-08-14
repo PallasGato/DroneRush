@@ -40,7 +40,12 @@ void Grid::set_point_arrays(){
 Cell& Grid::snap_to_grid(const Vector2DF& position){
     int col = static_cast<int>(position.x / grid_distance);
     int row = static_cast<int>(position.y / grid_distance);
-    if (col >= 0 && col < width && row >= 0 && row < height){
+    int negative_pos = static_cast<int>(position.x) | static_cast<int>(position.y);
+    if (col >= 0 &&
+        col < width &&
+        row >= 0 &&
+        row < height
+        && negative_pos >= 0){
         return cells[row][col];
     }
     // If the position is out of bounds, return a default cell with invalid coordinates.

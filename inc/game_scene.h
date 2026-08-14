@@ -12,7 +12,8 @@
 class GameScene: public Scene{
 private:
     Grid* grid = nullptr;
-    Cell on_hover_cell = Cell(-1, -1);
+    Cell on_hover_cell = Cell(-1, -1, false);
+    Cell last_valid_cell = Cell(-1, -1, false);
     Rectangle* highlight = nullptr;
 public:
     GameScene();

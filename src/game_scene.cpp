@@ -35,11 +35,13 @@ void GameScene::update(InputHandler& input_handler){
     //Getting cell according to mouse position and logging it
     int row, col;
     on_hover_cell = grid->snap_to_grid(mouse_to_world_position);
+    //Проверка на валидность полученной в текущем фрейме ячейки
+    if (!on_hover_cell.is_valid()){
+        on_hover_cell = last_valid_cell;
+    }
+    last_valid_cell = on_hover_cell;
     Vector2DF hover_position = on_hover_cell.get_world_position();
-    SDL_Log("Mouse position: (%f, %f)", mouse_to_world_position.x, mouse_to_world_position.y);
-    SDL_Log("Cell world position: (%f, %f)", hover_position.x, hover_position.y);
     highlight->set_position(world_to_screen(hover_position, get_camera().get_position()));
-
     //Returning from the function (seems obvious to comment)
     return;
 }
