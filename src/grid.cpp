@@ -29,6 +29,7 @@ void Grid::set_point_arrays(){
         for (int col = 0; col < width; col++){
             grid_point_array.push_back(SDL_FPoint{x, y});
             cells[row][col] = Cell(row, col);
+            cells[row][col].set_world_position(Vector2DF{x, y});
             x += grid_distance;
         }
         y += grid_distance;

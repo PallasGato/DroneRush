@@ -1,11 +1,18 @@
 #include "game_scene.h"
 
 GameScene::GameScene(){ 
-    auto grid_object = std::make_unique<Grid>(256, 256, 32);
+    auto grid_object = std::make_unique<Grid>(12, 12, 32);
     grid = grid_object.get();
     add_game_object(std::move(grid_object));
+
+    auto highlight_object = std::make_unique<Rectangle>(0, 0, 32, 32, 
+                                        Palette{127, 127, 127, 2});
+    highlight = highlight_object.get();
+    add_ui_object(std::move(highlight_object));
 }
 
+
+//Method to update current game state
 void GameScene::update(InputHandler& input_handler){
     //Changing camera position with WASD keys
     if (input_handler.is_key_pressed(SDL_SCANCODE_W)){
@@ -28,8 +35,10 @@ void GameScene::update(InputHandler& input_handler){
     //Getting cell according to mouse position and logging it
     int row, col;
     on_hover_cell = grid->snap_to_grid(mouse_to_world_position);
-    on_hover_cell.get_coordinates(row, col);
-    SDL_Log("Row:%d\tCol:%d", row, col);
+    Vector2DF hover_position = on_hover_cell.get_world_position();
+    SDL_Log("Mouse position: (%f, %f)", mouse_to_world_position.x, mouse_to_world_position.y);
+    SDL_Log("Cell world position: (%f, %f)", hover_position.x, hover_position.y);
+    highlight->set_position(world_to_screen(hover_position, get_camera().get_position()));
 
     //Returning from the function (seems obvious to comment)
     return;

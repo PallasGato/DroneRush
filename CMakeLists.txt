@@ -16,7 +16,8 @@ add_executable(main
     ${SOURCES})
 
 add_executable(tests
-    ${TEST_SOURCES})
+    ${TEST_SOURCES}
+    src/geometry.cpp)
 
 target_include_directories(
     main
