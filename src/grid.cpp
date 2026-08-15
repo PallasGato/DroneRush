@@ -23,30 +23,36 @@ Grid::Grid(){
 // Made for rendering debug points.
 // Later coordinates will be used to place game objects on the grid.
 void Grid::set_point_arrays(){
-    float y = 0;
-    for (int row = 0; row < height; row++){
-        float x = 0;
-        for (int col = 0; col < width; col++){
+    float x = 0;
+    for (int x_grid = 0; x_grid < width; x_grid++){
+        float y = 0;
+        for (int y_grid = 0; y_grid < height; y_grid++){
             grid_point_array.push_back(SDL_FPoint{x, y});
-            cells[row][col] = Cell(row, col);
-            cells[row][col].set_world_position(Vector2DF{x, y});
-            x += grid_distance;
+            cells[x_grid][y_grid] = Cell(x_grid, y_grid);
+            cells[x_grid][y_grid].set_world_position(Vector2DF{x, y});
+
+            //Задание тайла травы для каждой ячейки сетки
+            cells[x_grid][y_grid].set_terrain(grass);
+            grass_rectangles.push_back(SDL_FRect{x, y, grid_distance, grid_distance});    
+            //Ячейка хранит указатель на собственный прямоугольник
+            cells[x_grid][y_grid].set_terrain_rect(&grass_rectangles.back());
+            y += grid_distance;
         }
-        y += grid_distance;
+        x += grid_distance;
     }
 }
 
 
 Cell& Grid::snap_to_grid(const Vector2DF& position){
-    int col = static_cast<int>(position.x / grid_distance);
-    int row = static_cast<int>(position.y / grid_distance);
+    int x_grid = static_cast<int>(position.x / grid_distance);
+    int y_grid = static_cast<int>(position.y / grid_distance);
     int negative_pos = static_cast<int>(position.x) | static_cast<int>(position.y);
-    if (col >= 0 &&
-        col < width &&
-        row >= 0 &&
-        row < height
+    if (x_grid >= 0 &&
+        x_grid < width &&
+        y_grid >= 0 &&
+        y_grid < height
         && negative_pos >= 0){
-        return cells[row][col];
+        return cells[x_grid][y_grid];
     }
     // If the position is out of bounds, return a default cell with invalid coordinates.
     return invalid_cell; 
@@ -54,6 +60,12 @@ Cell& Grid::snap_to_grid(const Vector2DF& position){
 
 // Draws the grid on the screen using SDL_RenderPoints. The grid points are rendered in green color.
 void Grid::draw(SDL_Renderer& renderer, const Vector2DF& view_position){
+    //Отрисовка сетки в виде прямоугольников
+    std::vector<SDL_FRect> transformed_rectangles = grass_rectangles;
+    world_to_screen(transformed_rectangles, view_position);
+    SDL_SetRenderDrawColor(&renderer, 0, 173, 0, SDL_ALPHA_OPAQUE);
+    SDL_RenderFillRects(&renderer, transformed_rectangles.data(), transformed_rectangles.size());
+    //Отрисовка сетки в виде точек для отладки
     std::vector<SDL_FPoint> transformed_points = grid_point_array;
     world_to_screen(transformed_points, view_position);
     SDL_SetRenderDrawColor(&renderer, 255, 0, 255, SDL_ALPHA_OPAQUE);

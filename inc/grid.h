@@ -5,6 +5,8 @@
 #include "game_object.h"
 #include "cell.h"
 #include "geometry.h"
+#include "terrain.h"
+
 
 class Grid : public GameObject{
 private:
@@ -12,6 +14,10 @@ private:
     uint16_t width;
     uint16_t height;
     float grid_distance;
+
+    Terrain grass = Terrain(TerrainType::Grass, ResourceType::None);
+    std::vector<SDL_FRect> grass_rectangles = {};
+
     std::vector<std::vector<Cell>> cells = {};
     std::vector<SDL_FPoint> grid_point_array = {};
     Cell invalid_cell = Cell(-1, -1, false);

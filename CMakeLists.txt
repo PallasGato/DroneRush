@@ -17,7 +17,16 @@ add_executable(main
 
 add_executable(tests
     ${TEST_SOURCES}
-    src/geometry.cpp)
+    src/cell.cpp
+    src/grid.cpp
+    src/game_scene.cpp
+    src/scene.cpp
+    src/camera.cpp
+    src/input_handler.cpp
+    src/geometry.cpp
+    src/ui_object.cpp
+    src/game_object.cpp
+    src/terrain.cpp)
 
 target_include_directories(
     main
@@ -41,6 +50,7 @@ target_link_libraries(
     tests
     PRIVATE
     Catch2::Catch2WithMain
+    SDL3::SDL3
 )
 
 enable_testing()

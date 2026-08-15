@@ -44,3 +44,15 @@ Cell& Cell::operator=(const Cell& other){
     this->world_position = other.world_position;
     return *this;
 }
+
+void Cell::set_terrain(const Terrain& terrain){
+    this->terrain = terrain;
+}
+
+Vector2DF Cell::get_world_position() const {
+    return world_position;
+}
+
+void Cell::set_terrain_rect(SDL_FRect* rect){
+    this->terrain_rect = rect;
+}

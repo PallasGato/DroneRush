@@ -1,4 +1,5 @@
 #pragma once
+#include "palette.h"
 
 enum class TerrainType{
     Grass,
@@ -14,8 +15,11 @@ class Terrain{
 private:
     TerrainType type;
     ResourceType resource;
+    Palette color;
 public:
     Terrain();
     Terrain(TerrainType type, ResourceType resource);
-    TerrainType get_type();
+    
+    void setColor(Palette color);
+    Palette get_color() const;
 };
