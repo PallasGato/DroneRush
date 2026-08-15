@@ -23,6 +23,7 @@ Grid::Grid(){
 // Made for rendering debug points.
 // Later coordinates will be used to place game objects on the grid.
 void Grid::set_point_arrays(){
+    grass_rectangles.reserve(width * height);
     float x = 0;
     for (int x_grid = 0; x_grid < width; x_grid++){
         float y = 0;
