@@ -7,7 +7,7 @@ Grid::Grid(uint16_t x_size, uint16_t y_size, float grid_step){
     this->y_size = y_size;
     this->grid_distance = grid_step;
     this->visible = true;
-    cells.resize(y_size, std::vector<Cell>(x_size));
+    cells.resize(x_size, std::vector<Cell>(y_size));
     set_point_arrays();
     define_terrain_colors();
 }
