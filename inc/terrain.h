@@ -20,6 +20,6 @@ public:
     Terrain();
     Terrain(TerrainType type, ResourceType resource);
     
-    void setColor(Palette color);
+    void set_color(Palette color);
     Palette get_color() const;
 };

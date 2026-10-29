@@ -22,6 +22,7 @@ private:
     std::vector<SDL_FPoint> grid_point_array = {};
     Cell invalid_cell = Cell(-1, -1, false);
     void set_point_arrays();
+    void define_terrain_colors();
 public:
     Grid(uint16_t grid_width, uint16_t grid_height, float grid_step);
     Grid();

@@ -9,6 +9,7 @@ Grid::Grid(uint16_t grid_width, uint16_t grid_height, float grid_step){
     visible = true;
     cells.resize(height, std::vector<Cell>(width));
     set_point_arrays();
+    define_terrain_colors();
 }
 
 
@@ -18,7 +19,13 @@ Grid::Grid(){
     height = 0;
     grid_distance = 0;
     visible = true;
+    define_terrain_colors();
 }
+
+void Grid::define_terrain_colors(){
+    grass.set_color(Palette{0, 173, 0, SDL_ALPHA_OPAQUE});
+}
+
 // Array of points for grid.
 // Made for rendering debug points.
 // Later coordinates will be used to place game objects on the grid.
@@ -61,11 +68,13 @@ Cell& Grid::snap_to_grid(const Vector2DF& position){
 
 // Draws the grid on the screen using SDL_RenderPoints. The grid points are rendered in green color.
 void Grid::draw(SDL_Renderer& renderer, const Vector2DF& view_position){
-    //Отрисовка сетки в виде прямоугольников
+    //Отрисовка сетки в виде прямоугольников для тайлов травы
     std::vector<SDL_FRect> transformed_rectangles = grass_rectangles;
+    Palette grass_color = grass.get_color();
     world_to_screen(transformed_rectangles, view_position);
-    SDL_SetRenderDrawColor(&renderer, 0, 173, 0, SDL_ALPHA_OPAQUE);
+    SDL_SetRenderDrawColor(&renderer, grass_color.r, grass_color.g, grass_color.b, grass_color.a);
     SDL_RenderFillRects(&renderer, transformed_rectangles.data(), transformed_rectangles.size());
+
     //Отрисовка сетки в виде точек для отладки
     std::vector<SDL_FPoint> transformed_points = grid_point_array;
     world_to_screen(transformed_points, view_position);
