@@ -88,3 +88,36 @@ TEST_CASE("Тест 8: Привязка координат к сетке для 
     REQUIRE(x == -1);
     REQUIRE(y == -1);
 }
+
+TEST_CASE("Тест 9: Привязка координат к сетке для позиции (-0.1, -0.5) на сетке с шагом 32", "[Grid]") {
+    Grid grid(2, 2, 32.0f);
+    Vector2DF position{-0.1f, -0.5f};
+    Cell& cell = grid.snap_to_grid(position);
+    REQUIRE(cell.is_valid());
+    int x, y;
+    cell.get_coordinates(x, y);
+    REQUIRE(x == 0);
+    REQUIRE(y == 0);
+}
+
+TEST_CASE("Тест 10: Привязка координат к сетке для позиции (0, -0.5) на сетке с шагом 32", "[Grid]") {
+    Grid grid(2, 2, 32.0f);
+    Vector2DF position{0.0f, -0.5f};
+    Cell& cell = grid.snap_to_grid(position);
+    REQUIRE(cell.is_valid());
+    int x, y;
+    cell.get_coordinates(x, y);
+    REQUIRE(x == 0);
+    REQUIRE(y == 0);
+}
+
+TEST_CASE("Тест 11: Привязка координат к сетке для позиции (-1.0, 0) на сетке с шагом 32", "[Grid]") {
+    Grid grid(2, 2, 32.0f);
+    Vector2DF position{-1.0f, 0.0f};
+    Cell& cell = grid.snap_to_grid(position);
+    REQUIRE(!cell.is_valid());
+    int x, y;
+    cell.get_coordinates(x, y);
+    REQUIRE(x == -1);
+    REQUIRE(y == -1);
+}
