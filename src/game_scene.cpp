@@ -1,7 +1,7 @@
 #include "game_scene.h"
 
 GameScene::GameScene(){ 
-    auto grid_object = std::make_unique<Grid>(32, 32, 32);
+    auto grid_object = std::make_unique<Grid>(4, 6, 32);
     grid = grid_object.get();
     add_game_object(std::move(grid_object));
 

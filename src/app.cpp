@@ -3,9 +3,9 @@
 bool App::init(){
     if (!window.init()){
         renderer = window.get_renderer();
-        return 0;
+        return 1;
     }
-    return 1;
+    return 0;
 }
 
 void App::run(){

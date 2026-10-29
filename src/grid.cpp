@@ -1,13 +1,13 @@
 #include "grid.h"
 
-// Constructor for the grid class. Initializes the grid with the specified width,
-// height, and distance between grid points.
-Grid::Grid(uint16_t grid_width, uint16_t grid_height, float grid_step){
-    width = grid_width;
-    height = grid_height;
-    grid_distance = grid_step;
-    visible = true;
-    cells.resize(height, std::vector<Cell>(width));
+// Constructor for the grid class. Initializes the grid with the specified x_size,
+// y_size, and distance between grid points.
+Grid::Grid(uint16_t x_size, uint16_t y_size, float grid_step){
+    this->x_size = x_size;
+    this->y_size = y_size;
+    this->grid_distance = grid_step;
+    this->visible = true;
+    cells.resize(y_size, std::vector<Cell>(x_size));
     set_point_arrays();
     define_terrain_colors();
 }
@@ -15,10 +15,10 @@ Grid::Grid(uint16_t grid_width, uint16_t grid_height, float grid_step){
 
 Grid::Grid(){
     position = {0, 0};
-    width = 0;
-    height = 0;
-    grid_distance = 0;
-    visible = true;
+    this->x_size = 0;
+    this->y_size = 0;
+    this->grid_distance = 0;
+    this->visible = true;
     define_terrain_colors();
 }
 
@@ -30,11 +30,11 @@ void Grid::define_terrain_colors(){
 // Made for rendering debug points.
 // Later coordinates will be used to place game objects on the grid.
 void Grid::set_point_arrays(){
-    grass_rectangles.reserve(width * height);
+    grass_rectangles.reserve(x_size * y_size);
     float x = 0;
-    for (int x_grid = 0; x_grid < width; x_grid++){
+    for (int x_grid = 0; x_grid < x_size; x_grid++){
         float y = 0;
-        for (int y_grid = 0; y_grid < height; y_grid++){
+        for (int y_grid = 0; y_grid < y_size; y_grid++){
             grid_point_array.push_back(SDL_FPoint{x, y});
             cells[x_grid][y_grid] = Cell(x_grid, y_grid);
             cells[x_grid][y_grid].set_world_position(Vector2DF{x, y});
@@ -56,9 +56,9 @@ Cell& Grid::snap_to_grid(const Vector2DF& position){
     int y_grid = static_cast<int>(position.y / grid_distance);
     int negative_pos = static_cast<int>(position.x) | static_cast<int>(position.y);
     if (x_grid >= 0 &&
-        x_grid < width &&
+        x_grid < x_size &&
         y_grid >= 0 &&
-        y_grid < height
+        y_grid < y_size
         && negative_pos >= 0){
         return cells[x_grid][y_grid];
     }

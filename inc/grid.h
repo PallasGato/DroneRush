@@ -11,8 +11,8 @@
 class Grid : public GameObject{
 private:
     bool visible;
-    uint16_t width;
-    uint16_t height;
+    uint16_t x_size;
+    uint16_t y_size;
     float grid_distance;
 
     Terrain grass = Terrain(TerrainType::Grass, ResourceType::None);
@@ -24,7 +24,7 @@ private:
     void set_point_arrays();
     void define_terrain_colors();
 public:
-    Grid(uint16_t grid_width, uint16_t grid_height, float grid_step);
+    Grid(uint16_t x_size, uint16_t y_size, float grid_step);
     Grid();
     virtual ~Grid() = default;
 
