@@ -8,7 +8,7 @@ private:
     bool visible;
 public:
     UIobject();
-    void change_visibility(bool visible);
+    void change_visibility(bool visibility);
     bool is_visible();
     virtual void draw(SDL_Renderer& renderer) = 0;
 };

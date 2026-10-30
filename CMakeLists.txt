@@ -26,7 +26,8 @@ add_executable(tests
     src/geometry.cpp
     src/ui_object.cpp
     src/game_object.cpp
-    src/terrain.cpp)
+    src/terrain.cpp
+    src/unit.cpp)
 
 target_include_directories(
     main

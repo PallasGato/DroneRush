@@ -1,7 +1,10 @@
 #pragma once
 #include "terrain.h"
 #include "geometry.h"
+#include "unit.h"
 #include <SDL3/SDL.h>
+
+class Unit;
 
 class Cell{
 private:
@@ -11,6 +14,7 @@ private:
     SDL_FRect* terrain_rect;
     Vector2DF world_position;
     Terrain terrain;
+    Unit* occupant = nullptr;
 public:
     Cell();
     Cell(int x, int y);

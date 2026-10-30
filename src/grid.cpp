@@ -66,6 +66,14 @@ Cell& Grid::snap_to_grid(const Vector2DF& position){
     return invalid_cell; 
 }
 
+Cell& Grid::get_cell(int x, int y){
+    if (x >= 0 && x < x_size && y >= 0 && y < y_size){
+        return cells[x][y];
+    }
+    return invalid_cell;
+}
+
+
 // Draws the grid on the screen using SDL_RenderPoints. The grid points are rendered in green color.
 void Grid::draw(SDL_Renderer& renderer, const Vector2DF& view_position){
     //Отрисовка сетки в виде прямоугольников для тайлов травы
@@ -75,9 +83,11 @@ void Grid::draw(SDL_Renderer& renderer, const Vector2DF& view_position){
     SDL_SetRenderDrawColor(&renderer, grass_color.r, grass_color.g, grass_color.b, grass_color.a);
     SDL_RenderFillRects(&renderer, transformed_rectangles.data(), transformed_rectangles.size());
 
+    #ifdef DEBUG_MODE
     //Отрисовка сетки в виде точек для отладки
     std::vector<SDL_FPoint> transformed_points = grid_point_array;
     world_to_screen(transformed_points, view_position);
     SDL_SetRenderDrawColor(&renderer, 255, 0, 255, SDL_ALPHA_OPAQUE);
     SDL_RenderPoints(&renderer, transformed_points.data(), transformed_points.size());
+    #endif
 }

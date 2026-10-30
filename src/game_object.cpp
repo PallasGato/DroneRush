@@ -3,5 +3,5 @@
 GameObject::~GameObject() = default;
 
 void GameObject::change_visibility(bool visibility){
-    visible = visibility;
+    this->visible = visibility;
 }

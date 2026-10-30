@@ -6,7 +6,7 @@
 #include "cell.h"
 #include "geometry.h"
 #include "terrain.h"
-
+#include "MACRO.h"
 
 class Grid : public GameObject{
 private:
@@ -26,8 +26,10 @@ private:
 public:
     Grid(uint16_t x_size, uint16_t y_size, float grid_step);
     Grid();
-    virtual ~Grid() = default;
+    ~Grid() = default;
 
     Cell& snap_to_grid(const Vector2DF& position);
+    Cell& get_cell(int x, int y);
     void draw(SDL_Renderer& renderer, const Vector2DF& view_position);
+
 };

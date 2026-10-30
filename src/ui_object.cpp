@@ -4,12 +4,12 @@ UIobject::UIobject(){
     visible = true;
 }
 
-void UIobject::change_visibility(bool visible){
-    visible = visible;
+void UIobject::change_visibility(bool visibility){
+    this->visible = visibility;
 }
 
 bool UIobject::is_visible(){
-    return visible;
+    return this->visible;
 }
 
 Rectangle::Rectangle(float x, float y, float width, float height, Palette palette){

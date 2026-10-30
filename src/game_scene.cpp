@@ -1,7 +1,7 @@
 #include "game_scene.h"
 
 GameScene::GameScene(){ 
-    auto grid_object = std::make_unique<Grid>(4, 6, 32);
+    auto grid_object = std::make_unique<Grid>(32, 32, 32);
     grid = grid_object.get();
     add_game_object(std::move(grid_object));
 
@@ -9,6 +9,11 @@ GameScene::GameScene(){
                                         Palette{127, 127, 127, 2});
     highlight = highlight_object.get();
     add_ui_object(std::move(highlight_object));
+
+    auto test_unit = std::make_unique<Unit>();
+    test_unit->set_current_cell(&grid->get_cell(16, 16));
+    add_game_object(std::move(test_unit));
+
 }
 
 
