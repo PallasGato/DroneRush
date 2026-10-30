@@ -34,9 +34,9 @@ TEST_CASE("Тест 3: Привязка координат к сетке для 
     REQUIRE(y == 1);
 }
 
-TEST_CASE("Тест 4: Привязка координат к сетке для позиции (33, 32) на сетке с шагом 32", "[Grid]") {
+TEST_CASE("Тест 4: Привязка координат к сетке для позиции (40, 40) на сетке с шагом 32", "[Grid]") {
     Grid grid(10, 10, 32.0f);
-    Vector2DF position{33.0f, 32.0f};
+    Vector2DF position{40.0f, 40.0f};
     Cell& cell = grid.snap_to_grid(position);
     REQUIRE(cell.is_valid());
     int x, y;
@@ -78,9 +78,9 @@ TEST_CASE("Тест 7: Привязка координат к сетке для 
     REQUIRE(y == -1);
 }
 
-TEST_CASE("Тест 8: Привязка координат к сетке для позиции (65, 0) на сетке с шагом 32", "[Grid]") {
+TEST_CASE("Тест 8: Привязка координат к сетке для позиции (64, 0) на сетке с шагом 32", "[Grid]") {
     Grid grid(2, 2, 32.0f);
-    Vector2DF position{65.0f, 0.0f};
+    Vector2DF position{64.0f, 0.0f};
     Cell& cell = grid.snap_to_grid(position);
     REQUIRE(!cell.is_valid());
     int x, y;
@@ -143,6 +143,28 @@ TEST_CASE("Тест 12: привязка координат к сетке пря
 TEST_CASE("Тест 13: привязка координат к сетке прямоугольного поля (3x2) для позиции (32, 70) на сетке с шагом 32", "[Grid]") {
     Grid grid(3, 2, 32.0f);
     Vector2DF position{32.0f, 70.0f};
+    Cell& cell = grid.snap_to_grid(position);
+    REQUIRE(!cell.is_valid());
+    int x, y;
+    cell.get_coordinates(x, y);
+    REQUIRE(x == -1);
+    REQUIRE(y == -1);
+}
+
+TEST_CASE("Тест 14: привязка координат к сетке для позиции (-1, 23) на сетке с шагом 32", "[Grid]") {
+    Grid grid(2, 2, 32.0f);
+    Vector2DF position{-1.0f, 23.0f};
+    Cell& cell = grid.snap_to_grid(position);
+    REQUIRE(!cell.is_valid());
+    int x, y;
+    cell.get_coordinates(x, y);
+    REQUIRE(x == -1);
+    REQUIRE(y == -1);
+}
+
+TEST_CASE("Тест 15: привязка координат к сетке для позиции (23, -1) на сетке с шагом 32", "[Grid]") {
+    Grid grid(2, 2, 32.0f);
+    Vector2DF position{23.0f, -1.0f};
     Cell& cell = grid.snap_to_grid(position);
     REQUIRE(!cell.is_valid());
     int x, y;
