@@ -8,10 +8,10 @@
 
 class SceneManager{
 private:
-    std::vector<std::unique_ptr<Scene>>scenes = {};
-    Scene* active_scene;
+    std::vector<std::unique_ptr<Scene>> scenes = {};
+    Scene* active_scene = nullptr;
 public:
     void add_scene(std::unique_ptr<Scene> scene);
-    void scene_update(InputHandler& input_handler, float delta_time);
+    void scene_update(float delta_time);
     void render_scene(SDL_Renderer& renderer);
 };

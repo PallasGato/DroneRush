@@ -13,7 +13,8 @@ find_package(Catch2 CONFIG REQUIRED)
 file(GLOB SOURCES "src/*.cpp")
 file(GLOB TEST_SOURCES "test/*.cpp")
 add_executable(main 
-    ${SOURCES})
+    ${SOURCES}
+    inc/unit_manager.h)
 
 add_executable(tests
     ${TEST_SOURCES}
@@ -27,7 +28,9 @@ add_executable(tests
     src/ui_object.cpp
     src/game_object.cpp
     src/terrain.cpp
-    src/unit.cpp)
+    src/unit.cpp
+    src/unit_manager.cpp
+    )
 
 target_include_directories(
     main

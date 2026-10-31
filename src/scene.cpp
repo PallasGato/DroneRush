@@ -17,8 +17,7 @@ void Scene::add_ui_object(std::unique_ptr<UIobject> ui_object){
     ui_objects.push_back(std::move(ui_object));
 }
 
-Scene::Scene(){ 
-    return;
+Scene::Scene(InputHandler& input_handler) : input_handler(&input_handler) {
 }
 
 const Camera& Scene::get_camera() const{

@@ -10,7 +10,7 @@
 #include "ui_object.h"
 #include "palette.h"
 #include "unit.h"
-
+#include "unit_manager.h"
 
 class GameScene: public Scene{
 private:
@@ -25,22 +25,10 @@ private:
     //Инициализация объекта подсветки ячейки
     Rectangle* highlight = nullptr;
 
-    //Пул выделенных юнитов
-    std::list<Unit*> selected_units;
-    //Пул перемещающихся юнитов
-    std::list<Unit*> moving_units;
-    
-    //Кто знает, может однажды клавиши будут маппиться по настройкам, а не хардкодиться
-    //Метод для выделения юнита по ЛКМ
-    void unit_selection(InputHandler& input_handler, Cell& cell);
-    //Метод для задания целевой ячейки для ПКМ
-    void cell_targeting(InputHandler& input_handler, Cell& cell);
-    //Метод для отмены выделения юнитов по ESC
-    void reset_selected_units(InputHandler& input_handler);
-
-    void move_units();
+    //Инициализация менеджера юнитов
+    UnitManager unit_manager = UnitManager(*input_handler);
 public:
-    GameScene();
-    void update(InputHandler& input_handler, float delta_time);
+    GameScene(InputHandler& input_handler);
+    void update(float delta_time);
     ~GameScene();
 };
