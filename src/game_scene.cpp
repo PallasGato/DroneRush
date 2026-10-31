@@ -11,8 +11,11 @@ GameScene::GameScene(){
     add_ui_object(std::move(highlight_object));
 
     auto test_unit = std::make_unique<Unit>();
+    auto test_unit2 = std::make_unique<Unit>();
     test_unit->set_current_cell(&grid->get_cell(16, 16));
+    test_unit2->set_current_cell(&grid->get_cell(18, 18));
     add_game_object(std::move(test_unit));
+    add_game_object(std::move(test_unit2));
 
 }
 
@@ -81,6 +84,15 @@ void GameScene::unit_selection(InputHandler& input_handler, Cell& cell){
         //Добавление юнита в пул выделенных юнитов
         selected_units.push_back(cell.get_occupant());
     }
+    //Если юнита нет на ячейке, то сбрасываются все юниты
+    if (input_handler.is_button_just_pressed(LEFT_MOUSE_BUTTON)
+    && cell.is_valid() && (occupant == nullptr))
+    {
+        for (Unit* unit : selected_units){
+            unit->set_selection(false);
+        }
+        selected_units.clear();
+    }
 }
 
 //Метод для задания целевой ячейки для юнита по ПКМ
@@ -105,15 +117,15 @@ void GameScene::cell_targeting(InputHandler& input_handler, Cell& cell){
 //Метод перемещения юнитов в пуле юнитов
 //Пока тупо телепортация
 void GameScene::move_units(){
-    //Потенциально кладезь багов
-    for (Unit* unit : moving_units){
-        bool unit_reached_destination = unit->move();
-        if (unit_reached_destination){
-            //Удаление юнита из пула перемещающихся юнитов
-            moving_units.remove(unit);
-            //Выход из функции если больше нет юнитов в пуле перемещающихся юнитов
-            if (moving_units.empty()) return;
-        }
+    //Написала нейронка. Но это решает косяки с сегфолтом
+    //Для того, чтобы удаляемый юнит не переёбывал весь список
+    
+    for (auto it = moving_units.begin(); it != moving_units.end();){
+    if ((*it)->move()){
+        it = moving_units.erase(it);
+    } else {
+        ++it;
+    }
     }
 }
 

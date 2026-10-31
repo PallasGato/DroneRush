@@ -46,6 +46,10 @@ void Unit::set_target_cell(Cell* cell){
 void Unit::set_target_cell(Cell* cell, std::list<Unit*>& moving_units){
     this->target_cell = cell;
     if (cell != nullptr){
+        if (cell->get_occupant() != nullptr){
+            //Если в целевой ячейке уже есть юнит, то не будем туда перемещаться
+            return;
+        }
         cell->get_coordinates(this->target_x_cell, this->target_y_cell);
         if (!moving){
             moving = true;
@@ -74,6 +78,13 @@ bool Unit::move(){
         SDL_Log("Unit has no valid target cell. Cannot move.");
         #endif
 
+        return false;
+    }
+
+    //Проверка на то, что другой юнит не занял целевую ячейку.
+    //В этом случае остаёмся на месте
+    if (target_cell->get_occupant() != nullptr){
+        moving = false;
         return false;
     }
     //Стрелок дошёл до исполнителя желаний. Его цель здесь. Вознаграждён будет только один
