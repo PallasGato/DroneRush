@@ -119,9 +119,9 @@ void GameScene::cell_targeting(InputHandler& input_handler, Cell& cell){
 void GameScene::move_units(){
     //Написала нейронка. Но это решает косяки с сегфолтом
     //Для того, чтобы удаляемый юнит не переёбывал весь список
-    
     for (auto it = moving_units.begin(); it != moving_units.end();){
     if ((*it)->move()){
+        //Если юнит дошёл до ячейки, либо движение заблокировано другим юнитом, то удаляем его из пула перемещающихся юнитов
         it = moving_units.erase(it);
     } else {
         ++it;

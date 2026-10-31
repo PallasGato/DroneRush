@@ -85,7 +85,7 @@ bool Unit::move(){
     //В этом случае остаёмся на месте
     if (target_cell->get_occupant() != nullptr){
         moving = false;
-        return false;
+        return true;
     }
     //Стрелок дошёл до исполнителя желаний. Его цель здесь. Вознаграждён будет только один
     moving = false;
