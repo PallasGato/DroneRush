@@ -41,6 +41,6 @@ private:
     void move_units();
 public:
     GameScene();
-    void update(InputHandler& input_handler);
+    void update(InputHandler& input_handler, float delta_time);
     ~GameScene();
 };

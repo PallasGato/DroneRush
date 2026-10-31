@@ -8,8 +8,8 @@ void SceneManager::add_scene(std::unique_ptr<Scene> scene){
     }
 }
 
-void SceneManager::scene_update(InputHandler& input_handler){
-    active_scene->update(input_handler);
+void SceneManager::scene_update(InputHandler& input_handler, float delta_time){
+    active_scene->update(input_handler, delta_time);
 }
 
 void SceneManager::render_scene(SDL_Renderer& renderer){

@@ -21,7 +21,7 @@ GameScene::GameScene(){
 
 
 //Method to update current game state
-void GameScene::update(InputHandler& input_handler){
+void GameScene::update(InputHandler& input_handler, float delta_time){
     //Changing camera position with WASD keys
     if (input_handler.is_key_pressed(SDL_SCANCODE_W)){
         get_camera().move(0, -10);

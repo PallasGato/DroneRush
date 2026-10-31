@@ -12,6 +12,6 @@ private:
     Scene* active_scene;
 public:
     void add_scene(std::unique_ptr<Scene> scene);
-    void scene_update(InputHandler& input_handler);
+    void scene_update(InputHandler& input_handler, float delta_time);
     void render_scene(SDL_Renderer& renderer);
 };

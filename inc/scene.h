@@ -24,7 +24,7 @@ public:
     void add_ui_object(std::unique_ptr<UIobject> ui_object);
     void add_view_position(Vector2DF position_change);
     void render(SDL_Renderer& renderer);
-    virtual void update(InputHandler& input_handler) = 0;
+    virtual void update(InputHandler& input_handler, float delta_time) = 0;
 
     const Camera& get_camera() const;
     Camera& get_camera();
