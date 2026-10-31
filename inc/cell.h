@@ -19,12 +19,16 @@ public:
     Cell();
     Cell(int x, int y);
     Cell(int x, int y, bool is_valid);
+    Cell(int x, int y, bool is_valid, Vector2DF world_position);
     bool is_valid();
 
     void get_coordinates(Vector2DF& hover_coordinates);
     void get_coordinates(int& hover_x, int& hover_y);
     void set_world_position(const Vector2DF& position);
     Vector2DF get_world_position() const;
+
+    Unit* get_occupant() const;
+    void set_occupant(Unit* unit);
 
     void set_terrain(const Terrain& terrain);
     void set_terrain_rect(SDL_FRect* rect);

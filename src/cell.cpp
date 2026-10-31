@@ -21,6 +21,13 @@ Cell::Cell(int x, int y, bool valid){
     this->valid = valid;
 }
 
+Cell::Cell(int x, int y, bool valid, Vector2DF world_position){
+    this->x = x;
+    this->y = y;
+    this->valid = valid;
+    this->world_position = world_position;
+}
+
 bool Cell::is_valid(){
     return valid;
 }
@@ -55,4 +62,12 @@ Vector2DF Cell::get_world_position() const {
 
 void Cell::set_terrain_rect(SDL_FRect* rect){
     this->terrain_rect = rect;
+}
+
+Unit* Cell::get_occupant() const {
+    return occupant;
+}
+
+void Cell::set_occupant(Unit* unit) {
+    this->occupant = unit;
 }

@@ -1,5 +1,6 @@
 #pragma once
 
+#include <list>
 #include <SDL3/SDL.h>
 #include "game_object.h"
 #include "cell.h"
@@ -11,8 +12,6 @@ class Cell;
 
 class Unit: public GameObject{
 private:
-    bool visible = true;
-
     //Информация о текущей ячейке, в которой находится юнит
     Cell* current_cell = nullptr;
     int x_cell = 0;
@@ -25,6 +24,10 @@ private:
 
     //Информация о текущей позиции юнита в мировых координатах
     Vector2DF world_position = {0, 0};
+
+    //Выбран ли юнит
+    bool selected = false;
+
 public:
     Unit();
     ~Unit() = default;
@@ -32,4 +35,10 @@ public:
     void change_visibility(bool visibility);
     void set_current_cell(Cell* cell);
     void set_target_cell(Cell* cell);
+    void set_target_cell(Cell* cell, std::list<Unit*>& moving_units);
+
+    bool move();
+
+    bool is_selected() const;
+    void set_selection(bool selection);
 };
