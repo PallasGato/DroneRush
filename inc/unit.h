@@ -27,6 +27,7 @@ private:
 
     //Выбран ли юнит
     bool selected = false;
+    bool moving = false;
 
 public:
     Unit();

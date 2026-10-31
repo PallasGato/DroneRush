@@ -30,9 +30,13 @@ private:
     //Пул перемещающихся юнитов
     std::list<Unit*> moving_units;
     
-    //Метод для выделения юнита по клику мыши
+    //Кто знает, может однажды клавиши будут маппиться по настройкам, а не хардкодиться
+    //Метод для выделения юнита по ЛКМ
     void unit_selection(InputHandler& input_handler, Cell& cell);
+    //Метод для задания целевой ячейки для ПКМ
     void cell_targeting(InputHandler& input_handler, Cell& cell);
+    //Метод для отмены выделения юнитов по ESC
+    void reset_selected_units(InputHandler& input_handler);
 
     void move_units();
 public:

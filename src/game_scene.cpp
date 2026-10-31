@@ -51,6 +51,9 @@ void GameScene::update(InputHandler& input_handler){
     //Проверка на задание целевой ячейки для юнита по ПКМ
     cell_targeting(input_handler, *on_hover_cell);
 
+    //Отмена выделения юнитов по ESC
+    reset_selected_units(input_handler);
+
     //Перемещение всех юнитов, которые находятся в пуле перемещающихся юнитов
     move_units();
     //Returning from the function (seems obvious to comment)
@@ -102,6 +105,7 @@ void GameScene::cell_targeting(InputHandler& input_handler, Cell& cell){
 //Метод перемещения юнитов в пуле юнитов
 //Пока тупо телепортация
 void GameScene::move_units(){
+    //Потенциально кладезь багов
     for (Unit* unit : moving_units){
         bool unit_reached_destination = unit->move();
         if (unit_reached_destination){
@@ -110,5 +114,14 @@ void GameScene::move_units(){
             //Выход из функции если больше нет юнитов в пуле перемещающихся юнитов
             if (moving_units.empty()) return;
         }
+    }
+}
+
+void GameScene::reset_selected_units(InputHandler& input_handler){
+    if (input_handler.is_key_just_pressed(SDL_SCANCODE_ESCAPE)){
+        for (Unit* unit : selected_units){
+            unit->set_selection(false);
+        }
+        selected_units.clear();
     }
 }

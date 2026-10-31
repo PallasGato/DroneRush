@@ -19,9 +19,12 @@ void Unit::change_visibility(bool visibility){
     this->visible = visibility;
 }
 
-void Unit::set_current_cell(Cell* cell){
-    this->current_cell = cell;
+void Unit::set_current_cell(Cell* cell){    
     if (cell != nullptr && cell->is_valid()){
+        if (this->current_cell != nullptr){
+            this->current_cell->set_occupant(nullptr);
+        }
+        this->current_cell = cell;
         cell->get_coordinates(this->x_cell, this->y_cell);
         this->world_position = cell->get_world_position();
         cell->set_occupant(this);
@@ -44,7 +47,10 @@ void Unit::set_target_cell(Cell* cell, std::list<Unit*>& moving_units){
     this->target_cell = cell;
     if (cell != nullptr){
         cell->get_coordinates(this->target_x_cell, this->target_y_cell);
-        moving_units.push_back(this);
+        if (!moving){
+            moving = true;
+            moving_units.push_back(this);
+        }
     }
 }
 
@@ -62,6 +68,16 @@ void Unit::set_selection(bool selection){
 bool Unit::move(){
     //Честно говоря, нахуй проверка нужна. У нас же по сути ранее отсекается возможность 
     //того, что юнит может быть в пуле перемещающихся юнитов, если у него нет целевой валидной ячейки
+
+    if (target_cell == nullptr || !target_cell->is_valid()){
+        #ifdef DEBUG_MODE
+        SDL_Log("Unit has no valid target cell. Cannot move.");
+        #endif
+
+        return false;
+    }
+    //Стрелок дошёл до исполнителя желаний. Его цель здесь. Вознаграждён будет только один
+    moving = false;
     set_current_cell(target_cell);
     set_target_cell(nullptr);
     return true;
