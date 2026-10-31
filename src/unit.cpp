@@ -44,12 +44,14 @@ void Unit::set_target_cell(Cell* cell){
 
 //Задание целевой ячейки и добавление юнита в пул перемещающихся юнитов
 void Unit::set_target_cell(Cell* cell, std::list<Unit*>& moving_units){
-    this->target_cell = cell;
     if (cell != nullptr){
-        if (cell->get_occupant() != nullptr){
+        if (cell->get_occupant() != nullptr
+        || !cell->is_valid()){
             //Если в целевой ячейке уже есть юнит, то не будем туда перемещаться
+            //Либо если цель невалидная, то тоже не будем туда перемещаться
             return;
         }
+        this->target_cell = cell;
         cell->get_coordinates(this->target_x_cell, this->target_y_cell);
         if (!moving){
             moving = true;
