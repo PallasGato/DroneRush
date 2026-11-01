@@ -64,10 +64,10 @@ void Cell::set_terrain_rect(SDL_FRect* rect){
     this->terrain_rect = rect;
 }
 
-Unit* Cell::get_occupant() const {
-    return occupant;
+std::list<Unit*> Cell::get_occupant() const {
+    return occupants;
 }
 
 void Cell::set_occupant(Unit* unit) {
-    this->occupant = unit;
+    this->occupants.push_back(unit);
 }

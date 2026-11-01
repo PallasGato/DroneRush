@@ -6,6 +6,7 @@ GameScene::GameScene(InputHandler& input_handler) : Scene(input_handler) {
     auto grid_object = std::make_unique<Grid>(32, 32, 32);
     grid = grid_object.get();
     add_game_object(std::move(grid_object));
+    unit_manager.set_grid(grid);
 
     //Оверлей подстветки выделенной клетки
     auto highlight_object = std::make_unique<Rectangle>(0, 0, 32, 32, 
@@ -16,8 +17,11 @@ GameScene::GameScene(InputHandler& input_handler) : Scene(input_handler) {
     //Инициализация юнитов
     auto test_unit = std::make_unique<Unit>();
     auto test_unit2 = std::make_unique<Unit>();
-    test_unit->set_current_cell(&grid->get_cell(16, 16));
-    test_unit2->set_current_cell(&grid->get_cell(18, 18));
+    test_unit->set_position(Vector2DF{32, 32});
+    test_unit2->set_position(Vector2DF{512, 512});
+
+    unit_manager.add_selected_unit(test_unit.get());
+
     add_game_object(std::move(test_unit));
     add_game_object(std::move(test_unit2));
 
@@ -53,7 +57,7 @@ void GameScene::update(float delta_time){
     Vector2DF hover_position = on_hover_cell->get_world_position();
     highlight->set_position(world_to_screen(hover_position, get_camera().get_position()));
 
-    unit_manager.process_units(*on_hover_cell, delta_time);
+    unit_manager.process_units(*on_hover_cell, delta_time, mouse_to_world_position);
     return;
 }
 

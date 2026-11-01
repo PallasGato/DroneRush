@@ -8,45 +8,20 @@ UnitManager::~UnitManager() = default;
 
 //Метод для выделения юнита по ЛКМ
 void UnitManager::unit_selection(Cell& cell){
-    Unit* occupant = cell.get_occupant();
-    //Для выполнения выделения юнита по клику мыши необходимо, чтобы:
-    //1. Была нажата левая кнопка мыши
-    //2. Ячейка, на которой находится курсор мыши, была валидной
-    //3. В ячейке, на которой находится курсор мыши, находился юнит
-    //4. Юнит не был уже выделен
-    if (input_handler->is_button_just_pressed(LEFT_MOUSE_BUTTON)
-    && cell.is_valid() && (occupant != nullptr)
-    && !occupant->is_selected())
-    {
-        //Задание юнита как выделенного
-        occupant->set_selection(true);
-        //Добавление юнита в пул выделенных юнитов
-        selected_units.push_back(cell.get_occupant());
-    }
-    //Если юнита нет на ячейке, то сбрасываются все юниты
-    if (input_handler->is_button_just_pressed(LEFT_MOUSE_BUTTON)
-    && cell.is_valid() && (occupant == nullptr))
-    {
-        for (Unit* unit : selected_units){
-            unit->set_selection(false);
-        }
-        selected_units.clear();
-    }
+    return;
 }
 
 //Метод для задания целевой ячейки для юнита по ПКМ
-void UnitManager::cell_targeting(Cell& cell){
-    //Надо определить, есть ли юниты, но для начала проверим, что ПКМ была нажата
-    if (input_handler->is_button_just_pressed(RIGHT_MOUSE_BUTTON) 
-    && cell.is_valid())
-    {
-        //Не буду инвертировать логику и возвращаться из функции
-        //Потом поменять не проблема, когда я ещё буду делать логику постройки зданий
-        //Просто смотрим, есть ли выделенные юниты
-        if (!selected_units.empty()){
-            //Если есть, то задаём им целевую ячейку
-            for (Unit* unit : selected_units){
-                unit->set_target_cell(&cell, moving_units);
+void UnitManager::unit_targeting(Cell& cell, Vector2DF mouse_world_position){
+    if (input_handler->is_button_just_pressed(RIGHT_MOUSE_BUTTON) &&
+        grid->snap_to_grid(mouse_world_position).is_valid()){
+        for (Unit* unit : selected_units){
+            if (!unit->is_moving()){
+                unit->set_moving(true);
+                unit->set_target_position(mouse_world_position, moving_units);
+            }
+            else {
+                unit->change_target_position(mouse_world_position);
             }
         }
     }
@@ -59,12 +34,15 @@ void UnitManager::move_units(float delta_time){
     //Написала нейронка. Но это решает косяки с сегфолтом
     //Для того, чтобы удаляемый юнит не переёбывал весь список
     for (auto it = moving_units.begin(); it != moving_units.end();){
-    if ((*it)->move()){
-        //Если юнит дошёл до ячейки, либо движение заблокировано другим юнитом, то удаляем его из пула перемещающихся юнитов
-        it = moving_units.erase(it);
-    } else {
-        ++it;
-    }
+        bool moved = (*it)->move(*grid);
+        if (moved){
+            //Дошёл до целевой позиции, удаляем из списка
+            //Убираем флаг движения
+            (*it)->set_moving(false);
+            it = moving_units.erase(it);
+        } else {
+            ++it;
+        }
     }
 }
 
@@ -77,13 +55,21 @@ void UnitManager::reset_selected_units(){
     }
 }
 
-void UnitManager::process_units(Cell& cell, float delta_time){
+void UnitManager::process_units(Cell& cell, float delta_time, Vector2DF mouse_world_position){
     //Метод для выделения юнита по ЛКМ
     unit_selection(cell);
     //Метод для задания целевой ячейки для ПКМ
-    cell_targeting(cell);
+    unit_targeting(cell, mouse_world_position);
     //Метод для отмены выделения юнитов по ESC
     reset_selected_units();
     //Обработка передвижения юнитов
     move_units(delta_time);
+}
+
+void UnitManager::set_grid(Grid* grid){
+    this->grid = grid;
+}
+
+void UnitManager::add_selected_unit(Unit* unit){
+    selected_units.push_back(unit);
 }

@@ -16,11 +16,14 @@ private:
     //Хэндлер ввода для дальнейшей проверки нажимаемых клавиш
     InputHandler* input_handler;
 
+    //Сетка, которая определяет карту
+    Grid* grid = nullptr;
+
     //Кто знает, может однажды клавиши будут маппиться по настройкам, а не хардкодиться
     //Метод для выделения юнита по ЛКМ
     void unit_selection(Cell& cell);
     //Метод для задания целевой ячейки для ПКМ
-    void cell_targeting(Cell& cell);
+    void unit_targeting(Cell& cell, Vector2DF mouse_world_position);
     //Метод для отмены выделения юнитов по ESC
     void reset_selected_units();
     //Обработка передвижения юнитов
@@ -30,7 +33,10 @@ public:
     UnitManager(InputHandler& input_handler);
     ~UnitManager();
 
-    void process_units(Cell& cell, float delta_time);
+    void process_units(Cell& cell, float delta_time, Vector2DF mouse_world_position);
 
+    void add_selected_unit(Unit* unit);
+
+    void set_grid(Grid* grid);
 
 };

@@ -1,8 +1,8 @@
 #pragma once
 #include "terrain.h"
 #include "geometry.h"
-#include "unit.h"
 #include <SDL3/SDL.h>
+#include <list>
 
 class Unit;
 
@@ -14,7 +14,8 @@ private:
     SDL_FRect* terrain_rect;
     Vector2DF world_position;
     Terrain terrain;
-    Unit* occupant = nullptr;
+    //Список юнитов, которые находятся в ячейке
+    std::list<Unit*> occupants;
 public:
     Cell();
     Cell(int x, int y);
@@ -27,7 +28,7 @@ public:
     void set_world_position(const Vector2DF& position);
     Vector2DF get_world_position() const;
 
-    Unit* get_occupant() const;
+   std::list<Unit*> get_occupant() const;
     void set_occupant(Unit* unit);
 
     void set_terrain(const Terrain& terrain);
