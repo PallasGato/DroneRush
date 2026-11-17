@@ -1,7 +1,7 @@
 #pragma once
 
 #include <vector>
-
+#include <cmath>
 struct  Vector2DF{
     float x;
     float y;
@@ -50,3 +50,22 @@ T world_to_screen(const T& point, const T& view_position){
 }
 
 Vector2DF screen_to_world(const Vector2DF& point, const Vector2DF& world_position);
+
+//Функция для вычисления расстояния между двумя точками в 2D пространстве
+template <typename T>
+float distance(const T& point1, const T& point2){
+    float dx = point2.x - point1.x;
+    float dy = point2.y - point1.y;
+    return std::sqrt(dx * dx + dy * dy);
+}
+
+template <typename T>
+T normalized_delta(const T& point1, const T& point2){
+    float dx = point2.x - point1.x;
+    float dy = point2.y - point1.y;
+    float dist = std::sqrt(dx * dx + dy * dy);
+    if (dist == 0) {
+        return {0, 0}; // Avoid division by zero
+    }
+    return {dx / dist, dy / dist};
+}

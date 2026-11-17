@@ -2,11 +2,13 @@
 
 #include <SDL3/SDL.h>
 #include <vector>
+#include <list>
 #include "game_object.h"
 #include "cell.h"
 #include "geometry.h"
 #include "terrain.h"
 #include "MACRO.h"
+
 
 class Grid : public GameObject{
 private:
@@ -29,6 +31,7 @@ public:
     ~Grid() = default;
 
     Cell& snap_to_grid(const Vector2DF& position);
+    std::list<Cell*> get_surroundings(const Vector2DF& position, float radius);
     Cell& get_cell(int x, int y);
     void draw(SDL_Renderer& renderer, const Vector2DF& view_position);
 

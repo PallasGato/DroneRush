@@ -50,6 +50,32 @@ void Grid::set_point_arrays(){
     }
 }
 
+// Возвращает массив ячеек, находящихся в радиусе radius от позиции position
+std::list<Cell*> Grid::get_surroundings(const Vector2DF& position, float radius){
+
+    // Просчёт границ области поиска ячеек в радиусе radius от позиции position
+    // Вычисление квадратной области вокруг
+    float low_x = position.x - radius;
+    float high_x = position.x + radius;
+    float low_y = position.y - radius;
+    float high_y = position.y + radius;
+    //Просчёт минимального и максимального индеков ячеек
+    int low_x_grid = static_cast<int>(low_x / grid_distance);
+    int high_x_grid = static_cast<int>(high_x / grid_distance);
+    int low_y_grid = static_cast<int>(low_y / grid_distance);
+    int high_y_grid = static_cast<int>(high_y / grid_distance);
+    
+    std::list<Cell*> surrounding_cells;
+    for (int x = low_x_grid; x <= high_x_grid; x++){
+        for (int y = low_y_grid; y <= high_y_grid; y++){
+            if (x >= 0 && x < x_size && y >= 0 && y < y_size){
+                surrounding_cells.push_back(&cells[x][y]);
+            }
+        }
+    }
+    return surrounding_cells;
+}
+
 
 Cell& Grid::snap_to_grid(const Vector2DF& position){
     int x_grid = static_cast<int>(position.x / grid_distance);
